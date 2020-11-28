@@ -1,21 +1,109 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Readers Club</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+.jumbotron.jumb
+  a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Sign In
+  a#anchor.signin1(data-toggle='modal' data-target='#joinUsModal' href='#') Join Us
+  a#anchor.signin1(data-target='#helpModal' data-toggle='modal' href='#') Help
+nav.navbar.navbar-expand-lg.navbar-light.smart-scroll.p-2
+  a.navbar-brand.ml-2(href='#') Readers Club
+  
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-   
-  </div>
-</nav>
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarText' aria-controls='navbarText' aria-expanded='false' aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbarText.collapse.navbar-collapse
+    ul.navbar-nav
+      li#itm.nav-item.ml-3
+        a.nav-link(href='/') Home
+      li#itm.nav-item
+        a.nav-link(href='/') Browse
+      li#itm.nav-item
+        a.nav-link(href='#') Library
+      li#itm.nav-item
+        form.form-inline
+          input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
+          button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+      
+      li#itm.nav-item.float-right1
+        .dropdown
+          button#dropdownMenuButton.btn.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+            | Write
+          .dropdown-menu(aria-labelledby='dropdownMenuButton')
+            a.dropdown-item(href='#') Create a new story
+            a.dropdown-item(href='#') My Stories
+      li#itm.nav-item
+        a(href="",class="nav-link") Profile
+
+
+  
+nav.navbar.navbar-light.bg-light
+// Login Modal
+#loginModal.modal.fade(role='dialog')
+  .modal-dialog.model-lg(role='content')
+    // Model Content
+    .modal-content
+      .modal-header
+        h4.modal-title Login
+        button.close(type='button' data-dismiss='modal')
+          | &times;
+      .modal-body
+        form
+          .form-row
+            .form-group.col-sm-4
+              label.sr-only(for='exampleInputEmail3') Email address
+              input#exampleInputEmail3.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email')
+            .form-group.col-sm-4
+              label.sr-only(for='exampleInputPassword3') Password
+              input#exampleInputPassword3.form-control.form-control-sm.mr-1(type='password' placeholder='Password')
+            .col-sm-auto
+              .form-check
+                input.form-check-input(type='checkbox')
+                label.form-check-label  Remember me 
+          .form-row
+            button.btn.btn-secondary.btn-sm.ml-auto(type='button' data-dismiss='modal')
+              | Cancel
+            button.btn.btn-primary.btn-sm.ml-1(type='submit')
+              | Sign in
+// Join Us Modal
+#joinUsModal.modal.fade(role='dialog')
+  .modal-dialog.model-lg(role='content')
+    // Model Content
+    .modal-content
+      .modal-header
+        h4.modal-title Join Us
+        button.close(type='button' data-dismiss='modal')
+          | &times;
+      .modal-body
+        form
+          .form-row
+            .form-group.col-sm-4
+              label.sr-only(for='exampleInputEmail3') Email address
+              input#exampleInputEmail3.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email')
+            .form-group.col-sm-4
+              label.sr-only(for='exampleInputPassword3') Password
+              input#exampleInputPassword3.form-control.form-control-sm.mr-1(type='password' placeholder='Password')
+            .form-group.col-sm-4
+              label.sr-only(for='exampleInputPassword4') Retype Password
+              input#exampleInputPassword4.form-control.form-control-sm.mr-1(type='password' placeholder='Retype Password')
+            .col-sm-auto
+              .form-check
+                input.form-check-input(type='checkbox')
+                label.form-check-label  Remember me 
+          .form-row
+            button.btn.btn-secondary.btn-sm.ml-auto(type='button' data-dismiss='modal')
+              | Cancel
+            button.btn.btn-primary.btn-sm.ml-1(type='submit')
+              | Sign Up
+script.
+  $("body").css("padding-top", $(".navbar").outerHeight() + "px");
+  // detect scroll top or down
+  if ($(".smart-scroll").length > 0) {
+  // check if element exists
+  var last_scroll_top = 0;
+  $(window).on("scroll", function () {
+  scroll_top = $(this).scrollTop();
+  if (scroll_top < last_scroll_top) {
+  $(".smart-scroll").removeClass("scrolled-down").addClass("scrolled-up");
+  } else {
+  $(".smart-scroll").removeClass("scrolled-up").addClass("scrolled-down");
+  }
+  last_scroll_top = scroll_top;
+  });
+  }

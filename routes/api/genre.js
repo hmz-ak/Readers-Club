@@ -1,10 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const Genre = require("../../models/genre");
+const multer = require("multer");
+
+//define storage for images
+
+const storage = multer.diskStorage({
+  //destination
+  destination: function (req, file, callback) {
+    callback(null, "./public/uploads/");
+  },
+
+  //filename
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+//upload parameters for multer
+const upload = multer({
+  storage: storage,
+  limits: {
+    fieldSize: 1024 * 1024 * 3,
+  },
+});
 
 router.get("/", async (req, res) => {
   var genre = await Genre.find();
-  res.send(genre);
+  res.render("genre/index", { genre });
 });
 
 router.get("/new", (req, res) => {
@@ -16,9 +39,10 @@ router.get("/:id", async (req, res) => {
   res.render({ genre });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   var genre = new Genre();
   genre.name = req.body.name;
+  genre.image = req.file.filename;
   await genre.save();
   res.redirect("/api/novels");
 });

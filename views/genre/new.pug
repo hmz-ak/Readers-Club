@@ -1,8 +1,11 @@
 extends ../layout
 
 block content
-    form(action="/api/genre/", method="post")
+    form(action="/api/genre/", method="post",enctype="multipart/form-data")
         .form-group
             label(for="name") Enter Name
             input#name(type="text",class="form-control",name="name",placeholder="Enter Name of the novel")
+        .form-group
+            label(for="image") Upload Cover Image
+            input#image(type="file",name="image",class="form-control-file")
         input(type="submit",class="btn btn-info btn-sm")

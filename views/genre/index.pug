@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    .row
+        each item in genre
+            .col-3.mt-2
+                .card(style='width: 20rem;')
+                    img.card-img-top(src='...' alt='Card image cap')
+                    .card-body
+                        h5.card-title=item.name
+                        p.card-text
+                            | Some quick example text to build on the card title and make up the bulk of the card&apos;s content.
+                        a.btn.btn-primary(href='#') Go somewhere
+            

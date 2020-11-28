@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+  a(href="/api/novels/new") create new novel
+  each item in novels
+    h4=item.name
+    h4=item.genre
+    h4=item.theme
+    img(src="/uploads/"+item.image, alt="")

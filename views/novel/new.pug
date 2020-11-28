@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    form(action="/api/novels/", method="post",enctype="multipart/form-data")
+        .form-group
+            label(for="name") Enter Name
+            input#name(type="text",class="form-control",name="name",placeholder="Enter Name of the novel")
+        .form-group
+            label(for="genre") Enter Genre
+            input#genre(type="text",class="form-control",name="genre",placeholder="Enter Genre of the novel")
+        .form-group
+            label(for="theme") Enter Theme
+            textarea#theme(name="theme", cols="30", rows="10",class="form-control")
+        .form-group
+            label(for="image") Upload Cover Image
+            input#image(type="file",name="image",class="form-control-file")
+        input(type="submit",class="btn btn-info btn-sm")

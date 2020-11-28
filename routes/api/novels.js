@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Novel = require("../../models/novels");
+const Genre = require("../../models/genre");
 const multer = require("multer");
 
 //logic of image uploading using multer is defined in this part of code
@@ -34,9 +35,9 @@ router.get("/", async (req, res) => {
   var novels = await Novel.find();
   res.render("novel/index", { novels });
 });
-router.get("/new", (req, res) => {
-  console.log("here");
-  res.render("novel/new");
+router.get("/new", async (req, res) => {
+  var genre = await Genre.find();
+  res.render("novel/new", { genre });
 });
 
 //get a single novel

@@ -32,7 +32,7 @@ const upload = multer({
 
 //get all the novels
 router.get("/", async (req, res) => {
-  var novels = await Novel.find();
+  var novels = await Novel.find().limit(10).sort({ date: "desc" });
   res.render("novel/index", { novels });
 });
 router.get("/new", async (req, res) => {

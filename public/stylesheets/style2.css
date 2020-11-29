@@ -12,7 +12,6 @@ a:hover,
 a:active,
 a:visited {
   transition: color 150ms;
-  color: #95a5a6;
   text-decoration: none;
 }
 a:hover {
@@ -23,8 +22,7 @@ a:hover {
   width: 100%;
 }
 ::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent;
+  overflow-x: hidden;
 }
 .row {
   overflow: auto;
@@ -95,8 +93,18 @@ a:hover {
   position: absolute;
   color: white;
   bottom: 0;
+  font-size: 18px;
   padding: 10px;
 }
+
+.tile__title2 {
+  position: absolute;
+  color: white;
+  bottom: 0;
+  font-weight: 600;
+  padding: 10px;
+}
+
 .row__inner:hover {
   transform: translate3d(-62.5px, 0, 0);
 }

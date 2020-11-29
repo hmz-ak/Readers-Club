@@ -4,6 +4,7 @@ var novelSchema = mongoose.Schema({
   name: String,
   genre: String,
   theme: String,
+  date: { type: Date, default: Date.now },
   image: {
     type: String,
     default: "placeholder.jpg",

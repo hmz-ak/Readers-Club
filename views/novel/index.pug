@@ -1,6 +1,17 @@
 extends ../layout
 
 block content
+  .contain
+    .row
+      .row__inner
+        each item in novels
+          .tile
+            .tile__media
+              img.tile__img(src='/uploads/'+item.image alt='')
+            .tile__details
+              .tile__title=item.name
+              
+
   a(href="/api/genre/new") create new genre
   each item in novels
     h4=item.name

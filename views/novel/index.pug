@@ -46,6 +46,33 @@ block content
                     .tile__title.mb-4=item.name
                   
                     .tile__title2=item.genre
+    h3 Completed Stories
+    .contain
+      .row
+        .row__inner
+          each item in completed
+              .tile
+                a(href="#")
+                  .tile__media
+                    img.tile__img(src='/uploads/'+item.image alt='')
+                  .tile__details
+                    .tile__title.mb-4=item.name
+                  
+                    .tile__title2=item.genre
+    h3 You'll also like
+    .contain
+      .row
+        .row__inner
+          each item in completed
+              .tile
+                a(href="#")
+                  .tile__media
+                    img.tile__img(src='/uploads/'+item.image alt='')
+                  .tile__details
+                    .tile__title.mb-4=item.name
+                  
+                    .tile__title2=item.genre
+    
 
               
 

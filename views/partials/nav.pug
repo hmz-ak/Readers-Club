@@ -1,6 +1,9 @@
 .jumbotron.jumb
-  a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Log In
-  a#anchor.signin1(data-toggle='modal' data-target='#joinUsModal' href='#') Sign Up
+  if user
+    a#anchor.signin(href='/users/logout') Log Out
+  else
+    a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Log In
+    a#anchor.signin1(data-toggle='modal' data-target='#joinUsModal' href='#') Sign Up
 nav.navbar.navbar-expand-lg.navbar-light.smart-scroll.p-2
   a.navbar-brand.ml-2(href='#') Readers Club
   

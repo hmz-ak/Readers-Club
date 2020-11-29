@@ -29,7 +29,8 @@ const upload = multer({
 router.get("/", auth, async (req, res) => {
   console.log(req.user);
   var genre = await Genre.find();
-  res.render("genre/index", { genre });
+  var user = req.user;
+  res.render("genre/index", { genre, user });
 });
 
 router.get("/new", (req, res) => {
@@ -41,12 +42,14 @@ router.get("/:id", async (req, res) => {
   res.render({ genre });
 });
 
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", auth, upload.single("image"), async (req, res) => {
   var genre = new Genre();
   genre.name = req.body.name;
   genre.image = req.file.filename;
   await genre.save();
-  res.redirect("/api/novels");
+  var user = req.user;
+
+  res.redirect("/api/novels", { user });
 });
 
 router.delete("/delete", async (req, res) => {

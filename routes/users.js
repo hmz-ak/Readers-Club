@@ -42,4 +42,15 @@ router.post("/login", async (req, res) => {
   res.redirect("/");
 });
 
+router.get("/not_login", (req, res) => {
+  var errorr = "You Need To Log In";
+  res.render("error", { errorr });
+});
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("authorization");
+  var errorr = "You Need To Log In";
+  res.render("error", { errorr });
+});
+
 module.exports = router;

@@ -3,7 +3,8 @@ const router = express.Router();
 const Novel = require("../../models/novels");
 const Genre = require("../../models/genre");
 const multer = require("multer");
-
+const auth = require("../../middleware/auth");
+const localStorage = require("node-localstorage").LocalStorage;
 //logic of image uploading using multer is defined in this part of code
 
 //define storage for images

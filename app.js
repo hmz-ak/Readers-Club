@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var novelsRouter = require("./routes/api/novels");
 var genreRouter = require("./routes/api/genre");
+var config = require("config");
 
 var app = express();
 
@@ -43,13 +44,10 @@ app.use(function (err, req, res, next) {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://hamza:hamza@123@cluster0.hvxvx.mongodb.net/readers_club_db",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(config.get("db"), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("database connection successful");
   })

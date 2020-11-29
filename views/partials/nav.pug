@@ -44,14 +44,14 @@ nav.navbar.navbar-light.bg-light
         button.close(type='button' data-dismiss='modal')
           | &times;
       .modal-body
-        form
+        form(action="/users/login",method="post")
           .form-row
             .form-group.col-sm-4
               label.sr-only(for='exampleInputEmail3') Email address
-              input#exampleInputEmail3.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email')
+              input#name1.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email',name="email")
             .form-group.col-sm-4
               label.sr-only(for='exampleInputPassword3') Password
-              input#exampleInputPassword3.form-control.form-control-sm.mr-1(type='password' placeholder='Password')
+              input#pass1.form-control.form-control-sm.mr-1(type='password' placeholder='Password',name="password")
             .col-sm-auto
               .form-check
                 input.form-check-input(type='checkbox')
@@ -67,25 +67,21 @@ nav.navbar.navbar-light.bg-light
     // Model Content
     .modal-content
       .modal-header
-        h4.modal-title Join Us
+        h4.modal-title Sign Up
         button.close(type='button' data-dismiss='modal')
           | &times;
       .modal-body
-        form
+        form(action="/users/register", method="post")
           .form-row
             .form-group.col-sm-4
+              label.sr-only(for='exampleInputName3') Your Name
+              input#exampleInputName3.form-control.form-control-sm.mr-1(type='text' placeholder='Enter Your Name',name="name")
+            .form-group.col-sm-4
               label.sr-only(for='exampleInputEmail3') Email address
-              input#exampleInputEmail3.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email')
+              input#exampleInputEmail3.form-control.form-control-sm.mr-1(type='email' placeholder='Enter email',name="email")
             .form-group.col-sm-4
               label.sr-only(for='exampleInputPassword3') Password
-              input#exampleInputPassword3.form-control.form-control-sm.mr-1(type='password' placeholder='Password')
-            .form-group.col-sm-4
-              label.sr-only(for='exampleInputPassword4') Retype Password
-              input#exampleInputPassword4.form-control.form-control-sm.mr-1(type='password' placeholder='Retype Password')
-            .col-sm-auto
-              .form-check
-                input.form-check-input(type='checkbox')
-                label.form-check-label  Remember me 
+              input#exampleInputPassword3.form-control.form-control-sm.mr-1(type='password' placeholder='Password',name="password")
           .form-row
             button.btn.btn-secondary.btn-sm.ml-auto(type='button' data-dismiss='modal')
               | Cancel
@@ -106,4 +102,13 @@ script.
   }
   last_scroll_top = scroll_top;
   });
+
+  //- var form = document.getElementById('myform');
+
+  //- // Adds a listener for the "submit" event.
+  //- form.addEventListener('submit', function(e) {
+  //-   var name = document.getElementById("name1").value;
+  //-   var pass = document.getElementById("pass1").value;
+  
+  //- });
   }

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Genre = require("../../models/genre");
 const multer = require("multer");
+const auth = require("../../middleware/auth");
 
 //define storage for images
 
@@ -25,7 +26,8 @@ const upload = multer({
   },
 });
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
+  console.log(req.user._id);
   var genre = await Genre.find();
   res.render("genre/index", { genre });
 });

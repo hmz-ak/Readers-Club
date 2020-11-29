@@ -1,0 +1,4 @@
+{
+  "db": "mongodb+srv://hamza:hamza@123@cluster0.hvxvx.mongodb.net/readers_club_db",
+  "jwtPrivateKey": "thePrivateKey"
+}

@@ -1,7 +1,6 @@
 .jumbotron.jumb
-  a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Sign In
-  a#anchor.signin1(data-toggle='modal' data-target='#joinUsModal' href='#') Join Us
-  a#anchor.signin1(data-target='#helpModal' data-toggle='modal' href='#') Help
+  a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Log In
+  a#anchor.signin1(data-toggle='modal' data-target='#joinUsModal' href='#') Sign Up
 nav.navbar.navbar-expand-lg.navbar-light.smart-scroll.p-2
   a.navbar-brand.ml-2(href='#') Readers Club
   
@@ -27,7 +26,7 @@ nav.navbar.navbar-expand-lg.navbar-light.smart-scroll.p-2
             | Write
           .dropdown-menu(aria-labelledby='dropdownMenuButton')
             a.dropdown-item(href='/api/novels/new') Create a new story
-            a.dropdown-item(href='#') My Stories
+            a.dropdown-item(href='/api/novels/mystories') My Stories
       li#itm.nav-item
         a(href="",class="nav-link") Profile
 
@@ -103,12 +102,5 @@ script.
   last_scroll_top = scroll_top;
   });
 
-  //- var form = document.getElementById('myform');
 
-  //- // Adds a listener for the "submit" event.
-  //- form.addEventListener('submit', function(e) {
-  //-   var name = document.getElementById("name1").value;
-  //-   var pass = document.getElementById("pass1").value;
-  
-  //- });
   }

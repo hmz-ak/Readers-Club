@@ -27,7 +27,7 @@ const upload = multer({
 });
 
 router.get("/", auth, async (req, res) => {
-  console.log(req.user._id);
+  console.log(req.user);
   var genre = await Genre.find();
   res.render("genre/index", { genre });
 });

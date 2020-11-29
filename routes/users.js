@@ -5,7 +5,6 @@ var bcrypt = require("bcryptjs");
 var _ = require("lodash");
 var jwt = require("jsonwebtoken");
 var config = require("config");
-
 router.post("/register", async (req, res) => {
   var email = req.body.email;
   let user = await User.findOne({ email });
@@ -18,14 +17,7 @@ router.post("/register", async (req, res) => {
   user.password = req.body.password;
   await user.generatePasswordHash();
   await user.save();
-  var token = jwt.sign(
-    { _id: user._id, name: user.name, role: user.role },
-    config.get("jwtPrivateKey")
-  );
-  let dataToReturn = {
-    name: user.name,
-    email: user.email,
-  };
+
   res.send(_.pick(user, ["name", "email"]));
 });
 
@@ -46,6 +38,7 @@ router.post("/login", async (req, res) => {
 
   // Set cookie
   res.cookie("authorization", token, options); // options is optional
+
   res.redirect("/");
 });
 

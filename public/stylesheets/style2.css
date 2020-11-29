@@ -91,6 +91,7 @@ a:hover {
 }
 .tile__title {
   position: absolute;
+  margin-left: 40px;
   color: white;
   bottom: 0;
   font-size: 18px;
@@ -101,6 +102,7 @@ a:hover {
   position: absolute;
   color: white;
   bottom: 0;
+  margin-left: 40px;
   font-weight: 600;
   padding: 10px;
 }

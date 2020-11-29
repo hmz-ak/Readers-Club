@@ -41,6 +41,12 @@ router.get("/new", async (req, res) => {
   var genre = await Genre.find();
   res.render("novel/new", { genre });
 });
+//Show all the stories specific to person
+router.get("/mystories", auth, async (req, res) => {
+  var novel = await Novel.find({ user_id: req.user._id });
+  console.log(novel);
+  res.render("novel/mystories", { novel });
+});
 
 //get a single novel
 router.get("/:id", async (req, res) => {
@@ -49,10 +55,10 @@ router.get("/:id", async (req, res) => {
 });
 
 //create a new novel
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", auth, upload.single("image"), async (req, res) => {
   var novel = new Novel();
   console.log(req.file);
-
+  novel.user_id = req.user._id;
   novel.name = req.body.name;
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;

@@ -4,7 +4,6 @@ const Novel = require("../../models/novels");
 const Genre = require("../../models/genre");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
-const localStorage = require("node-localstorage").LocalStorage;
 //logic of image uploading using multer is defined in this part of code
 
 //define storage for images
@@ -47,6 +46,9 @@ router.get("/new", auth, async (req, res) => {
 router.get("/mystories", auth, async (req, res) => {
   var novel = await Novel.find({ user_id: req.user._id });
   console.log(novel);
+  if (novel.length == 0) {
+    novel = null;
+  }
   var user = req.user;
   res.render("novel/mystories", { novel, user });
 });

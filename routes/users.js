@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
     config.get("jwtPrivateKey")
   );
   let options = {
-    maxAge: 1000 * 60 * 60 * 24, // would expire after 15 minutes
+    maxAge: 1000 * 60 * 60 * 24, // would expire after 24 hours
     httpOnly: true, // The cookie only accessible by the web server
     signed: false, // Indicates if the cookie should be signed
   };

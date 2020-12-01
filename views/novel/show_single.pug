@@ -17,7 +17,8 @@ block content
         .col-5
             a.btn.orange.mr-2(href="/api/chapters/"+chapters[0]._id.toString())
                 | Read Now 
-            a.btn.orange(href="#")
+            -console.log(novel._id)
+            a.btn.orange(href="/api/library/add?novel_id="+novel._id)
                 | Add To Library
         .col-6
             if novel.user_id[0]==user._id.toString()

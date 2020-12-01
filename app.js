@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var novelsRouter = require("./routes/api/novels");
 var genreRouter = require("./routes/api/genre");
+var chapterRouter = require("./routes/api/chapters");
 var config = require("config");
 
 var app = express();
@@ -26,6 +27,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api/novels", novelsRouter);
 app.use("/api/genre", genreRouter);
+app.use("/api/chapters", chapterRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

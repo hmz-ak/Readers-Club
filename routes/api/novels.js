@@ -34,6 +34,7 @@ const upload = multer({
 router.get("/", auth, async (req, res) => {
   var novels = await Novel.find().limit(10).sort({ date: "desc" });
   var completed = await Novel.find().limit(10);
+
   var user = req.user;
   res.render("novel/index", { novels, completed, user });
 });
@@ -63,17 +64,18 @@ router.get("/:id", auth, async (req, res) => {
 //create a new novel
 router.post("/", auth, upload.single("image"), async (req, res) => {
   var novel = new Novel();
-  console.log(req.file);
   novel.user_id = req.user._id;
   novel.name = req.body.name;
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;
   novel.image = req.file.filename;
-
+  user = req.user;
   try {
     await novel.save();
-    res.redirect("/");
+    console.log("here");
+    res.render("chapters/new", { novel, user });
   } catch (error) {
+    console.log("errorrr");
     console.log(error);
   }
 });

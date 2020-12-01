@@ -15,11 +15,13 @@ block content
     .row
         .col-1
         .col-5
-            a.btn.orange.mr-2(href="#")
+            a.btn.orange.mr-2(href="/api/chapters/"+chapters[0]._id.toString())
                 | Read Now 
             a.btn.orange(href="#")
                 | Add To Library
         .col-6
+            if novel.user_id[0]==user._id.toString()
+                a(href="/api/chapters/new/"+novel._id,class="btn btn-warning float-right white-text mr-4") Add New Chapter
     .row
         .col-1
         .col-11
@@ -30,14 +32,11 @@ block content
                     if chapters.length !=0
                         .card
                             each item in chapters
-                                a(href="#")
+                                a(href="/api/chapters/"+item._id)
                                     h5.text-center=item.title
-                        if novel.user_id[0]==user._id.toString()
-                            a(href="/api/chapters/new/"+novel._id) Add New Chapter
                     else
                         h5.text-center This Novel Does Not Have Any Chapters Yet
-                        if novel.user_id[0]==user._id.toString()
-                            a(href="/api/chapters/new/"+novel._id) Add New Chapter
+                        
                 .col-2
         
                

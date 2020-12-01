@@ -39,6 +39,13 @@ router.get("/new/:id", auth, (req, res) => {
   res.render("chapters/new", { novel_id, user });
 });
 
+//get a single chapter
+router.get("/:id", auth, async (req, res) => {
+  var chapter = await Chapter.findById(req.params.id);
+  var user = req.user;
+  res.render("chapters/index", { chapter, user });
+});
+
 //create a new chapter
 router.post("/", auth, upload.single("image"), async (req, res) => {
   var chapter = new Chapter();

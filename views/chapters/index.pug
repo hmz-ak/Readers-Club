@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    h1.my-4=chapter.title
+    .center
+        img.img-fluid(src='/uploads/'+chapter.image alt='Responsive image')
+    .row
+        .col-1
+        .col-10.mt-4
+            .card.p-3=chapter.content    
+        .col-1
+    
+    
+        

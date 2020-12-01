@@ -190,6 +190,14 @@ a:hover {
   display: block;
 }
 
+.orange {
+  background-color: #ff6122;
+  color: white;
+}
+.orange:hover {
+  color: white;
+  background-color: #ff4500;
+}
 /* @media screen and (min-width: 700px) {
     .theImg {
       width: 560px;

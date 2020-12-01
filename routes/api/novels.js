@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Novel = require("../../models/novels");
 const Genre = require("../../models/genre");
+const Chapter = require("../../models/chapters");
+const { User } = require("../../models/user");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
 //logic of image uploading using multer is defined in this part of code
@@ -45,7 +47,9 @@ router.get("/new", auth, async (req, res) => {
 });
 //Show all the stories specific to person
 router.get("/mystories", auth, async (req, res) => {
-  var novel = await Novel.find({ user_id: req.user._id });
+  var novel = await Novel.find({ user_id: req.user._id }).sort({
+    date: "desc",
+  });
   console.log(novel);
   if (novel.length == 0) {
     novel = null;
@@ -56,9 +60,11 @@ router.get("/mystories", auth, async (req, res) => {
 
 //get a single novel
 router.get("/:id", auth, async (req, res) => {
-  var novel = await Novel.findById(req.body.id);
+  var novel = await Novel.findById(req.params.id);
+  var user_info = await User.findById(novel.user_id);
+  var chapters = await Chapter.find({ novel_id: req.params.id });
   var user = req.user;
-  res.render("novel/show_single", { novel, user });
+  res.render("novel/show_single", { novel, user, user_info, chapters });
 });
 
 //create a new novel

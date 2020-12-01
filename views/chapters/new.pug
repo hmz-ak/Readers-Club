@@ -1,14 +1,14 @@
 extends ../layout
 
 block content
-    -console.log(novel._id);
+ 
     form(action="/api/chapters/", method="post",enctype="multipart/form-data")
-        input(type="hidden",value=novel._id,name="novel_id")
+        input(type="hidden",value=novel_id,name="novel_id")
         .form-group
             label(for="image") Upload Cover Image
             input#image(type="file",name="image",class="form-control-file")
         .form-group
-            input#chapter(type="text",class="form-control",name="chapter",placeholder="Enter Chapter Name or Number")
+            input#chapter(type="text",class="form-control",name="title",placeholder="Enter Chapter Name or Number")
         .form-group
            
         .form-group

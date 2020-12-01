@@ -27,18 +27,16 @@ const upload = multer({
 });
 
 router.get("/", auth, async (req, res) => {
-  console.log(req.user);
   var chapter = await Chapter.find();
   var user = req.user;
   res.render("chapters/index", { chapter, user });
 });
 
-router.get("/new", auth, (req, res) => {
-  var passedVar = req.query.novel_id;
+router.get("/new/:id", auth, (req, res) => {
+  var novel_id = req.params.id;
+  console.log(novel_id);
   user = req.user;
-  console.log("im heree");
-  console.log(passedVar);
-  res.render("chapters/new", { passedVar, user });
+  res.render("chapters/new", { novel_id, user });
 });
 
 //create a new chapter
@@ -46,9 +44,9 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   var chapter = new Chapter();
 
   chapter.user_id = req.user._id;
-  chaper.novel_id = req.body.novel_id;
-  chapter.genre = req.body.genre;
-  chapter.theme = req.body.theme;
+  chapter.novel_id = req.body.novel_id;
+  chapter.title = req.body.title;
+  chapter.content = req.body.content;
   chapter.image = req.file.filename;
 
   try {

@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+    .row
+        .col-1
+        .col-5
+            img.img-fluid(src='/uploads/'+novel.image alt='Responsive image')
+        .col-6
+            | Name <strong>#{novel.name}</strong><br>
+            | Genre <strong>#{novel.genre}</strong><br>
+            | Written by <strong>#{user_info.name}</strong><br><br>
+            | <h5>Theme of the story</h5>
+            | <em>#{novel.theme}</em>
+    hr.mx-4
+    .row
+        .col-1
+        .col-5
+            a.btn.orange.mr-2(href="#")
+                | Read Now 
+            a.btn.orange(href="#")
+                | Add To Library
+        .col-6
+    .row
+        .col-1
+        .col-11
+            h2.text-center.mb-4 Table Of Contents
+            .row
+                .col-2
+                .col-8
+                    if chapters.length !=0
+                        .card
+                            each item in chapters
+                                a(href="#")
+                                    h5.text-center=item.title
+                        if novel.user_id[0]==user._id.toString()
+                            a(href="/api/chapters/new/"+novel._id) Add New Chapter
+                    else
+                        h5.text-center This Novel Does Not Have Any Chapters Yet
+                        if novel.user_id[0]==user._id.toString()
+                            a(href="/api/chapters/new/"+novel._id) Add New Chapter
+                .col-2
+        
+               
+    

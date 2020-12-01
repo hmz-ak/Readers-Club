@@ -30,6 +30,7 @@ router.get("/", auth, async (req, res) => {
   console.log(req.user);
   var genre = await Genre.find();
   var user = req.user;
+
   res.render("genre/index", { genre, user });
 });
 

@@ -48,9 +48,12 @@ router.get("/not_login", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
+  req.user = null;
+  user = req.user;
   res.clearCookie("authorization");
   var errorr = "You Need To Log In";
-  res.render("error", { errorr });
+  console.log("logoutt");
+  res.render("error", { errorr, user });
 });
 
 module.exports = router;

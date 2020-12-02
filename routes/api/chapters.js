@@ -34,9 +34,12 @@ router.get("/", auth, async (req, res) => {
 
 router.get("/new/:id", auth, (req, res) => {
   var novel_id = req.params.id;
+  novel = {
+    _id: novel_id,
+  };
   console.log(novel_id);
   user = req.user;
-  res.render("chapters/new", { novel_id, user });
+  res.render("chapters/new", { novel, user });
 });
 
 //get a single chapter
@@ -48,6 +51,7 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new chapter
 router.post("/", auth, upload.single("image"), async (req, res) => {
+  console.log(req.body.novel_id);
   var chapter = new Chapter();
 
   chapter.user_id = req.user._id;
@@ -59,9 +63,7 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   try {
     await chapter.save();
     res.redirect("/");
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 });
 
 module.exports = router;

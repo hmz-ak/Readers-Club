@@ -3,6 +3,7 @@ const router = express.Router();
 const Novel = require("../../models/novels");
 const Genre = require("../../models/genre");
 const Chapter = require("../../models/chapters");
+const Library = require("../../models/library");
 const { User } = require("../../models/user");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
@@ -36,8 +37,8 @@ const upload = multer({
 router.get("/", auth, async (req, res) => {
   var novels = await Novel.find().limit(10).sort({ date: "desc" });
   var completed = await Novel.find().limit(10);
-
   var user = req.user;
+  console.log(completed);
   res.render("novel/index", { novels, completed, user });
 });
 router.get("/new", auth, async (req, res) => {
@@ -62,9 +63,20 @@ router.get("/mystories", auth, async (req, res) => {
 router.get("/:id", auth, async (req, res) => {
   var novel = await Novel.findById(req.params.id);
   var user_info = await User.findById(novel.user_id);
+  var library = await Library.find({
+    user_id: req.user._id,
+    novel_id: req.params.id,
+  });
+  console.log(library);
   var chapters = await Chapter.find({ novel_id: req.params.id });
   var user = req.user;
-  res.render("novel/show_single", { novel, user, user_info, chapters });
+  res.render("novel/show_single", {
+    novel,
+    user,
+    user_info,
+    chapters,
+    library,
+  });
 });
 
 //create a new novel

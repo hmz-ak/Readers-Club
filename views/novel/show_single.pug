@@ -17,9 +17,13 @@ block content
         .col-5
             a.btn.orange.mr-2(href="/api/chapters/"+chapters[0]._id.toString())
                 | Read Now 
-            -console.log(novel._id)
-            a.btn.orange(href="/api/library/add?novel_id="+novel._id)
-                | Add To Library
+            if(library.length == 0)
+                a.btn.orange(href="/api/library/add?novel_id="+novel._id)
+                    | Add To Library
+            else
+                a(href="/api/library/delete/"+novel._id,class="btn btn-danger")
+                    | Remove From Library
+                
         .col-6
             if novel.user_id[0]==user._id.toString()
                 a(href="/api/chapters/new/"+novel._id,class="btn btn-warning float-right white-text mr-4") Add New Chapter

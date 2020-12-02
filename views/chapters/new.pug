@@ -1,11 +1,12 @@
 extends ../layout
 
 block content
+    h3.text-center Enter Title, Image and Content for your new chapter
     .row
         .col-3
         .col-6.mt-4
             form(action="/api/chapters/", method="post",enctype="multipart/form-data")
-                -console.log(novel._id)
+                
                 input(type="hidden",value=novel._id,name="novel_id")
                 .form-group
                     label(for="image") Upload Cover Image

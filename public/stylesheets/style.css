@@ -254,7 +254,15 @@ a:hover {
 }
 
 .drk {
-  background-color: #000000;
+  background-color: #f5f5f5;
+}
+
+.drk2 {
+  color: black;
+  list-style: none;
+  font-size: small;
+  line-height: 3;
+  font-weight: 700;
 }
 
 .faicons {

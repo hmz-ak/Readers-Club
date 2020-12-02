@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Genre = require("../../models/genre");
+const Novel = require("../../models/novels");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
 
@@ -38,19 +39,22 @@ router.get("/new", (req, res) => {
   res.render("genre/new");
 });
 
-router.get("/:id", async (req, res) => {
-  var genre = await Genre.findById(req.params.id);
-  res.render({ genre });
+router.get("/:name", async (req, res) => {
+  console.log(req.params.name);
+  var novel = await Novel.find({ genre: req.params.name });
+  console.log(novel);
+  res.render("genre/genre_stories", { novel });
 });
 
 router.post("/", auth, upload.single("image"), async (req, res) => {
   var genre = new Genre();
   genre.name = req.body.name;
-  genre.image = req.file.filename;
-  await genre.save();
-  var user = req.user;
 
-  res.redirect("/api/novels", { user });
+  genre.image = req.file.filename;
+
+  await genre.save();
+
+  res.redirect("/api/novels");
 });
 
 router.delete("/delete", async (req, res) => {

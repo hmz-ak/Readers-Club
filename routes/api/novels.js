@@ -98,4 +98,33 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   }
 });
 
+//delete
+
+router.get("/delete/:id", async (req, res) => {
+  console.log("here i am");
+  await Novel.findByIdAndDelete(req.params.id);
+  res.redirect("/");
+});
+
+//update the story
+router.get("/edit/:id", async (req, res) => {
+  var novel = await Novel.findById(req.params.id);
+  var genre = await Genre.find();
+
+  res.render("novel/edit", { novel, genre });
+});
+
+//update the story
+router.post("/edit/:id", upload.single("image"), async (req, res) => {
+  var novel = await Novel.findById(req.params.id);
+  novel.name = req.body.name;
+  novel.genre = req.body.genre;
+  novel.theme = req.body.theme;
+  if (req.file) {
+    novel.image = req.file.filename;
+  }
+  await novel.save();
+  res.redirect("/");
+});
+
 module.exports = router;

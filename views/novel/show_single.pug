@@ -26,11 +26,9 @@ block content
                 
         .col-6
             if novel.user_id[0]==user._id.toString()
-                a(href="/api/chapters/new/"+novel._id,class="btn btn-warning float-right white-text mr-4") Edit
-            if novel.user_id[0]==user._id.toString()
-                a(href="/api/chapters/delete/"+novel._id,class="btn btn-danger float-right white-text mr-4") Delete
-            if novel.user_id[0]==user._id.toString()
-                a(href="/api/chapters/edit/"+novel._id,class="btn btn-success float-right white-text mr-4") Add New Chapter
+                a(href="/api/novels/edit/"+novel._id,class="btn btn-warning float-right white-text mr-4") Edit
+                a(href="/api/novels/delete/"+novel._id,class="btn btn-danger float-right white-text mr-4") Delete
+                a(href="/api/chapters/new/"+novel._id,class="btn btn-success float-right white-text mr-4") Add New Chapter
     .row
         .col-1
         .col-11

@@ -3,6 +3,7 @@ const router = express.Router();
 const Chapter = require("../../models/chapters");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
+const { find } = require("../../models/chapters");
 
 //define storage for images
 
@@ -59,6 +60,34 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   chapter.title = req.body.title;
   chapter.content = req.body.content;
   chapter.image = req.file.filename;
+
+  try {
+    await chapter.save();
+    res.redirect("/");
+  } catch (error) {}
+});
+
+//delete
+router.get("/delete/:id", auth, async (req, res) => {
+  await Chapter.findByIdAndDelete(req.params.id);
+  res.redirect("/");
+});
+
+router.get("/edit/:id", auth, async (req, res) => {
+  var chapter = await Chapter.findById(req.params.id);
+  user = req.user;
+  res.render("chapters/edit", { chapter, user });
+});
+//update chapter
+router.post("/update/:id", auth, upload.single("image"), async (req, res) => {
+  console.log("here i am");
+  var chapter = await Chapter.findById(req.params.id);
+
+  chapter.title = req.body.title;
+  chapter.content = req.body.content;
+  if (req.file) {
+    chapter.image = req.file.filename;
+  }
 
   try {
     await chapter.save();

@@ -3,8 +3,8 @@ extends ../layout
 block content
     h1.my-4.center=chapter.title
         if chapter.user_id[0]==user._id.toString()
-            a(style="margin:0px auto", href="/api/novels/edit/"+chapter._id,class="btn btn-warning float-right white-text mr-4 mt-3") Edit
-            a(href="/api/novels/edit/"+chapter._id,class="btn btn-danger float-right white-text mr-1 mt-3") Delete
+            a(style="margin:0px auto", href="/api/chapters/edit/"+chapter._id,class="btn btn-warning float-right white-text mr-4 mt-3") Edit
+            a(href="/api/chapters/delete/"+chapter._id,class="btn btn-danger float-right white-text mr-1 mt-3") Delete
     .center
         img.img-fluid(src='/uploads/'+chapter.image alt='Responsive image')
     .row

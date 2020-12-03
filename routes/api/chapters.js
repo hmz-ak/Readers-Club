@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Chapter = require("../../models/chapters");
+const multer = require("multer");
 const auth = require("../../middleware/auth");
+const { find } = require("../../models/chapters");
 const upload = require("../../multer");
 const cloudinary = require("../../cloudinary");
+const fs = require("fs");
 
 router.get("/", auth, async (req, res) => {
   var chapter = await Chapter.find();
@@ -40,6 +43,7 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   chapter.content = req.body.content;
   chapter.image = result.secure_url;
   chapter.cloudinary_id = result.public_id;
+  await fs.unlinkSync(req.file.path);
 
   try {
     await chapter.save();
@@ -49,7 +53,10 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 
 //delete
 router.get("/delete/:id", auth, async (req, res) => {
-  await Chapter.findByIdAndDelete(req.params.id);
+  var chap = await Chapter.findById(req.params.id);
+  await cloudinary.uploader.destroy(chap.cloudinary_id);
+
+  await chap.remove();
   res.redirect("/");
 });
 
@@ -66,7 +73,10 @@ router.post("/update/:id", auth, upload.single("image"), async (req, res) => {
   chapter.title = req.body.title;
   chapter.content = req.body.content;
   if (req.file) {
-    chapter.image = req.file.filename;
+    await cloudinary.uploader.destroy(chapter.cloudinary_id);
+    const result = await cloudinary.uploader.upload(req.file.path, "images");
+    chapter.image = result.secure_url;
+    chapter.cloudinary_id = result.public_id;
   }
 
   try {

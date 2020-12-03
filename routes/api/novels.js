@@ -62,13 +62,6 @@ router.get("/:id", auth, async (req, res) => {
 //create a new novel
 router.post("/", auth, upload.single("image"), async (req, res) => {
   const result = await cloudinary.uploader.upload(req.file.path, "images");
-  // var url;
-  // const file = req.file;
-  // const { path } = file;
-  // const newPath = await uploader(path);
-  // url = newPath;
-  // fs.unlinkSync(path);
-  console.log(result);
 
   var novel = new Novel();
   novel.user_id = req.user._id;
@@ -76,8 +69,10 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;
   novel.image = result.secure_url;
-  user = req.user;
   novel.cloudinary_id = result.public_id;
+  user = req.user;
+
+  await fs.unlinkSync(req.file.path);
   try {
     await novel.save();
     console.log("here");
@@ -92,7 +87,7 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 
 router.get("/delete/:id", async (req, res) => {
   var novel = await Novel.findById(req.params.id);
-  await cloudinary_del.uploader.destroy(novel.cloudinary_id);
+  await cloudinary.uploader.destroy(novel.cloudinary_id);
   await novel.remove();
   res.redirect("/");
 });
@@ -112,7 +107,11 @@ router.post("/edit/:id", upload.single("image"), async (req, res) => {
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;
   if (req.file) {
-    novel.image = req.file.filename;
+    await cloudinary.uploader.destroy(novel.cloudinary_id);
+    const result = await cloudinary.uploader.upload(req.file.path, "images");
+
+    novel.image = result.secure_url;
+    novel.cloudinary_id = result.public_id;
   }
   await novel.save();
   res.redirect("/");

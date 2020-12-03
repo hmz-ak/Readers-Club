@@ -6,7 +6,6 @@ const multer = require("multer");
 const auth = require("../../middleware/auth");
 const upload = require("../../multer");
 const cloudinary = require("../../cloudinary");
-
 const fs = require("fs");
 
 router.get("/", auth, async (req, res) => {
@@ -30,6 +29,8 @@ router.get("/:name", async (req, res) => {
 
 router.post("/", auth, upload.single("image"), async (req, res) => {
   const result = await cloudinary.uploader.upload(req.file.path, "images");
+
+  fs.unlinkSync(path);
 
   var genre = new Genre();
   genre.name = req.body.name;

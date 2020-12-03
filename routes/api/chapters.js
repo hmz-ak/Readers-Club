@@ -5,6 +5,8 @@ const multer = require("multer");
 const auth = require("../../middleware/auth");
 const { find } = require("../../models/chapters");
 const upload = require("../../multer");
+const cloudinary = require("../../cloudinary");
+const fs = require("fs");
 
 router.get("/", auth, async (req, res) => {
   var chapter = await Chapter.find();
@@ -31,14 +33,21 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new chapter
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  console.log(req.body.novel_id);
+  const uploader = async (path) => await cloudinary.uploads(path, "images");
+  var url;
+  const file = req.file;
+  const { path } = file;
+  const newPath = await uploader(path);
+  url = newPath;
+  fs.unlinkSync(path);
+
   var chapter = new Chapter();
 
   chapter.user_id = req.user._id;
   chapter.novel_id = req.body.novel_id;
   chapter.title = req.body.title;
   chapter.content = req.body.content;
-  chapter.image = req.file.filename;
+  chapter.image = url.url;
 
   try {
     await chapter.save();

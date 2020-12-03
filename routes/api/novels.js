@@ -7,29 +7,7 @@ const Library = require("../../models/library");
 const { User } = require("../../models/user");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
-//logic of image uploading using multer is defined in this part of code
-
-//define storage for images
-
-const storage = multer.diskStorage({
-  //destination
-  destination: function (req, file, callback) {
-    callback(null, "./public/uploads/");
-  },
-
-  //filename
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-
-//upload parameters for multer
-const upload = multer({
-  storage: storage,
-  limits: {
-    fieldSize: 1024 * 1024 * 3,
-  },
-});
+const upload = require("../../public/uploads/multer");
 
 //routes
 
@@ -67,9 +45,9 @@ router.get("/:id", auth, async (req, res) => {
     user_id: req.user._id,
     novel_id: req.params.id,
   });
-  console.log(library);
   var chapters = await Chapter.find({ novel_id: req.params.id });
   var user = req.user;
+
   res.render("novel/show_single", {
     novel,
     user,

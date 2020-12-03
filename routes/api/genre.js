@@ -4,28 +4,7 @@ const Genre = require("../../models/genre");
 const Novel = require("../../models/novels");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
-
-//define storage for images
-
-const storage = multer.diskStorage({
-  //destination
-  destination: function (req, file, callback) {
-    callback(null, "./public/uploads/");
-  },
-
-  //filename
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
-
-//upload parameters for multer
-const upload = multer({
-  storage: storage,
-  limits: {
-    fieldSize: 1024 * 1024 * 3,
-  },
-});
+const upload = require("../../public/uploads/multer");
 
 router.get("/", auth, async (req, res) => {
   console.log(req.user);

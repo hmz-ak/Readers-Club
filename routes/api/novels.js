@@ -68,14 +68,14 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   const newPath = await uploader(path);
   url = newPath;
   fs.unlinkSync(path);
-  console.log(url);
-  return;
+  console.log(url.url);
+
   var novel = new Novel();
   novel.user_id = req.user._id;
   novel.name = req.body.name;
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;
-  novel.image = req.file.filename;
+  novel.image = url.url;
   user = req.user;
   try {
     await novel.save();

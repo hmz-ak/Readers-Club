@@ -4,7 +4,7 @@ const Chapter = require("../../models/chapters");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
 const { find } = require("../../models/chapters");
-const upload = require("../../public/uploads/multer");
+const upload = require("../../multer");
 
 router.get("/", auth, async (req, res) => {
   var chapter = await Chapter.find();

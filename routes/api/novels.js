@@ -7,7 +7,9 @@ const Library = require("../../models/library");
 const { User } = require("../../models/user");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
-const upload = require("../../public/uploads/multer");
+const upload = require("../../multer");
+const cloudinary = require("../../cloudinary");
+const fs = require("fs");
 
 //routes
 
@@ -59,6 +61,15 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new novel
 router.post("/", auth, upload.single("image"), async (req, res) => {
+  const uploader = async (path) => await cloudinary.uploads(path, "images");
+  var url;
+  const file = req.file;
+  const { path } = file;
+  const newPath = await uploader(path);
+  url = newPath;
+  fs.unlinkSync(path);
+  console.log(url);
+  return;
   var novel = new Novel();
   novel.user_id = req.user._id;
   novel.name = req.body.name;

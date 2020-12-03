@@ -4,7 +4,7 @@ const Genre = require("../../models/genre");
 const Novel = require("../../models/novels");
 const multer = require("multer");
 const auth = require("../../middleware/auth");
-const upload = require("../../public/uploads/multer");
+const upload = require("../../multer");
 
 router.get("/", auth, async (req, res) => {
   console.log(req.user);

@@ -6,7 +6,12 @@ module.exports = multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
     let extension = path.extname(file.originalname);
-    if (extension !== ".jpg" && extension !== ".jpeg" && extension !== ".png") {
+    if (
+      extension !== ".jpg" &&
+      extension !== ".jpeg" &&
+      extension !== ".png" &&
+      extension !== ".webp"
+    ) {
       cb(new Error("File Not Supported"), false);
       return;
     }

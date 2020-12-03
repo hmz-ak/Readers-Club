@@ -18,14 +18,16 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/new", auth, admin, (req, res) => {
-  res.render("genre/new");
+  var user = req.user;
+  res.render("genre/new", { user });
 });
 
 router.get("/:name", auth, async (req, res) => {
   console.log(req.params.name);
   var novel = await Novel.find({ genre: req.params.name });
   console.log(novel);
-  res.render("genre/genre_stories", { novel });
+  var user = req.user;
+  res.render("genre/genre_stories", { novel, user });
 });
 
 router.post("/", auth, admin, upload.single("image"), async (req, res) => {
@@ -46,6 +48,7 @@ router.delete("/delete/:id", auth, admin, async (req, res) => {
   await cloudinary.uploader.destroy(gen.cloudinary_id);
 
   await gen.remove();
+  res.redirect("/api/novels");
 });
 
 router.put("/:id", auth, admin, upload.single("image"), async (req, res) => {
@@ -58,7 +61,7 @@ router.put("/:id", auth, admin, upload.single("image"), async (req, res) => {
     genre.cloudinary_id = result.public_id;
   }
   await genre.save();
-  res.render();
+  res.redirect("/api/novels");
 });
 
 module.exports = router;

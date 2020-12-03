@@ -72,6 +72,7 @@ router.post("/update/:id", auth, upload.single("image"), async (req, res) => {
   chapter.title = req.body.title;
   chapter.content = req.body.content;
   if (req.file) {
+    console.log("not here");
     await cloudinary.uploader.destroy(chapter.cloudinary_id);
     const result = await cloudinary.uploader.upload(req.file.path);
     chapter.image = result.secure_url;

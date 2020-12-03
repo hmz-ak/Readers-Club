@@ -33,7 +33,7 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new chapter
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  const result = await cloudinary.uploader.upload(req.file.path, "images");
+  const result = await cloudinary.uploader.upload(req.file.path);
 
   var chapter = new Chapter();
 
@@ -43,7 +43,6 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   chapter.content = req.body.content;
   chapter.image = result.secure_url;
   chapter.cloudinary_id = result.public_id;
-  await fs.unlinkSync(req.file.path);
 
   try {
     await chapter.save();
@@ -74,7 +73,7 @@ router.post("/update/:id", auth, upload.single("image"), async (req, res) => {
   chapter.content = req.body.content;
   if (req.file) {
     await cloudinary.uploader.destroy(chapter.cloudinary_id);
-    const result = await cloudinary.uploader.upload(req.file.path, "images");
+    const result = await cloudinary.uploader.upload(req.file.path);
     chapter.image = result.secure_url;
     chapter.cloudinary_id = result.public_id;
   }

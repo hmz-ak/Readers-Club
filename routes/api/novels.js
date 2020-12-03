@@ -61,7 +61,7 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new novel
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  const result = await cloudinary.uploader.upload(req.file.path, "images");
+  const result = await cloudinary.uploader.upload(req.file.path);
 
   var novel = new Novel();
   novel.user_id = req.user._id;
@@ -72,7 +72,6 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   novel.cloudinary_id = result.public_id;
   user = req.user;
 
-  await fs.unlinkSync(req.file.path);
   try {
     await novel.save();
     console.log("here");
@@ -108,7 +107,7 @@ router.post("/edit/:id", upload.single("image"), async (req, res) => {
   novel.theme = req.body.theme;
   if (req.file) {
     await cloudinary.uploader.destroy(novel.cloudinary_id);
-    const result = await cloudinary.uploader.upload(req.file.path, "images");
+    const result = await cloudinary.uploader.upload(req.file.path);
 
     novel.image = result.secure_url;
     novel.cloudinary_id = result.public_id;

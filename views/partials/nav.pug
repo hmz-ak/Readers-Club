@@ -2,9 +2,12 @@
   if user
     a#anchor.signin(href='/users/logout',class="badge badge-pill badge-light")
       | Log Out
-    a#anchor.signin(href='#',class="badge badge-pill badge-dark mr-4")
-      |Welcome #{user.name}
-    
+    if user.role =="admin"
+      a#anchor.signin(href='#',class="badge badge-pill badge-dark mr-4")
+        <span class="badge badge-pill badge-light">admin</span> | #{user.name}
+    else
+       a#anchor.signin(href='#',class="badge badge-pill badge-dark mr-4")
+        <span class="badge badge-pill badge-light">user</span> | #{user.name}
 
   else
     a#anchor.signin(data-toggle='modal' data-target='#loginModal' href='#') Log In

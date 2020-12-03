@@ -6,6 +6,7 @@ const multer = require("multer");
 const auth = require("../../middleware/auth");
 const upload = require("../../multer");
 const cloudinary = require("../../cloudinary");
+
 const fs = require("fs");
 
 router.get("/", auth, async (req, res) => {
@@ -28,20 +29,13 @@ router.get("/:name", async (req, res) => {
 });
 
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  const uploader = async (path) => await cloudinary.uploads(path, "images");
-  var url;
-  const file = req.file;
-  const { path } = file;
-  const newPath = await uploader(path);
-  url = newPath;
-  fs.unlinkSync(path);
-  console.log(url.url);
+  const result = await cloudinary.uploader.upload(req.file.path, "images");
 
   var genre = new Genre();
   genre.name = req.body.name;
 
-  genre.image = url.url;
-
+  genre.image = result.secure_url;
+  genre.cloudinary_id = result.public_id;
   await genre.save();
 
   res.redirect("/api/novels");

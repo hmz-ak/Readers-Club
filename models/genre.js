@@ -6,6 +6,7 @@ var genreSchema = mongoose.Schema({
     type: String,
     default: "placeholder.jpg",
   },
+  cloudinary_id: String,
 });
 
 var Genre = mongoose.model("Genre", genreSchema);

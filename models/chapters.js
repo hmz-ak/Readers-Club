@@ -17,6 +17,8 @@ var chapterSchema = mongoose.Schema({
     type: String,
     default: "placeholder.jpg",
   },
+  cloudinary_id: String,
+
   title: String,
   content: String,
 });

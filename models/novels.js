@@ -15,6 +15,7 @@ var novelSchema = mongoose.Schema({
     type: String,
     default: "placeholder.jpg",
   },
+  cloudinary_id: String,
 });
 
 var novelModel = mongoose.model("Novel", novelSchema);

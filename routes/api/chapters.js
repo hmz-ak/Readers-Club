@@ -1,12 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Chapter = require("../../models/chapters");
-const multer = require("multer");
 const auth = require("../../middleware/auth");
-const { find } = require("../../models/chapters");
 const upload = require("../../multer");
 const cloudinary = require("../../cloudinary");
-const fs = require("fs");
 
 router.get("/", auth, async (req, res) => {
   var chapter = await Chapter.find();
@@ -33,13 +30,7 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new chapter
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  const uploader = async (path) => await cloudinary.uploads(path, "images");
-  var url;
-  const file = req.file;
-  const { path } = file;
-  const newPath = await uploader(path);
-  url = newPath;
-  fs.unlinkSync(path);
+  const result = await cloudinary.uploader.upload(req.file.path, "images");
 
   var chapter = new Chapter();
 
@@ -47,7 +38,8 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
   chapter.novel_id = req.body.novel_id;
   chapter.title = req.body.title;
   chapter.content = req.body.content;
-  chapter.image = url.url;
+  chapter.image = result.secure_url;
+  chapter.cloudinary_id = result.public_id;
 
   try {
     await chapter.save();

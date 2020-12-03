@@ -61,22 +61,23 @@ router.get("/:id", auth, async (req, res) => {
 
 //create a new novel
 router.post("/", auth, upload.single("image"), async (req, res) => {
-  const uploader = async (path) => await cloudinary.uploads(path, "images");
-  var url;
-  const file = req.file;
-  const { path } = file;
-  const newPath = await uploader(path);
-  url = newPath;
-  fs.unlinkSync(path);
-  console.log(url.url);
+  const result = await cloudinary.uploader.upload(req.file.path, "images");
+  // var url;
+  // const file = req.file;
+  // const { path } = file;
+  // const newPath = await uploader(path);
+  // url = newPath;
+  // fs.unlinkSync(path);
+  console.log(result);
 
   var novel = new Novel();
   novel.user_id = req.user._id;
   novel.name = req.body.name;
   novel.genre = req.body.genre;
   novel.theme = req.body.theme;
-  novel.image = url.url;
+  novel.image = result.secure_url;
   user = req.user;
+  novel.cloudinary_id = result.public_id;
   try {
     await novel.save();
     console.log("here");
@@ -90,8 +91,9 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 //delete
 
 router.get("/delete/:id", async (req, res) => {
-  console.log("here i am");
-  await Novel.findByIdAndDelete(req.params.id);
+  var novel = await Novel.findById(req.params.id);
+  await cloudinary_del.uploader.destroy(novel.cloudinary_id);
+  await novel.remove();
   res.redirect("/");
 });
 
